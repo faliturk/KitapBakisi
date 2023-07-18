@@ -3,30 +3,23 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 //const mongoose =require('mongoose');
 //const MONGODB = "mongodb+srv://furkanaliturk:codes@cluster0.rrysnao.mongodb.net/?retryWrites=true&w=majority";
 //trying to add mongodb
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://furkanaliturk:codes@cluster0.rrysnao.mongodb.net/?retryWrites=true&w=majority";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
+import mongoose from 'mongoose';
+import express from 'express';
+const app = express();
+const uri = 'mongodb+srv://furkanaliturk0:codes@cluster0.rrysnao.mongodb.net/?retryWrites=true&w=majority';
+app.listen(8000, () => {
+    console.log("MongoDB Connection is Successful");
 });
-async function run() {
+async function connect() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        mongoose.connect(uri);
+        console.log("Connected to MONGODB");
     }
-    finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
+    catch (error) {
+        console.log(error);
     }
 }
-run().catch(console.dir);
+connect();
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
